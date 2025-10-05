@@ -75,21 +75,21 @@ def main():
                 except ValueError:
                     print("유효한 숫자로 입력해 주세요.")
         A = mat
-        print("입력된 행렬 A:")
+        print("\n 입력된 행렬 A:")
         for row in A:
-            print(" ".join(f"{val:.2f}" for val in row))
-        try:
+            print(" ".join(f"{val:.6f}" for val in row))
+        if has_inverse(A):
             inv_A = inverse_with_det(A)
             print("\n행렬식을 이용해서 구한 행렬 A의 역행렬:")
             for row in inv_A:
-                print(" ".join(f"{val:.2f}" for val in row))
+                print(" ".join(f"{val:.6f}" for val in row))
             inv_A_gj = gauss_jordan_inverse(A)
             print("\n가우스-조던 소거법으로 구한 행렬 A의 역행렬:")
             for row in inv_A_gj:
-                print(" ".join(f"{val:.2f}" for val in row))
-            if " ".join(f"{val:.2f}" for val in row) == " ".join(f"{val:.2f}" for val in row):
+                print(" ".join(f"{val:.6f}" for val in row))
+            if all(abs(inv_A[r][c] - inv_A_gj[r][c]) < 1e-10 for r in range(n) for c in range(n)):
                 print("\n두 방법으로 구한 결과가 동일합니다.")
-        except has_inverse(A) == False:
+        else:
             print("이 행렬은 역행렬이 없습니다.")
     except Exception as e:
         print(f"예외 발생: {e}")
